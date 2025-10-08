@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+
+
+body {
+  background: gainsboro;
+}
+body.dark{
+  background: black;
+  transition: all 1s ease;
+  /* color: white; */
+}

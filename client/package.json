@@ -1,0 +1,26 @@
+{
+  "name": "tutorial",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/axios": "^0.9.36",
+    "axios": "^1.12.2",
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/react": "19.2.0",
+    "@types/react-toastify": "^4.0.2",
+    "install": "^0.13.0",
+    "npm": "^11.6.1",
+    "react-toastify": "^11.0.5",
+    "tailwindcss": "^4"
+  }
+}
