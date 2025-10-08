@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import { BsClipboardHeartFill } from "react-icons/bs";
+import { FaClipboardCheck } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
-import { MdEditDocument } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -148,7 +148,7 @@ const updateHandle = async (id: string, name: string, url: string) => {
             value={password}
             readOnly
           />
-          <BsClipboardHeartFill
+          <FaClipboardCheck
             className={`absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors ${
               clip ? "text-green-600" : "text-gray-500"
             }`}
@@ -204,7 +204,7 @@ const updateHandle = async (id: string, name: string, url: string) => {
               <p>Name: {item.name}</p>
               <p>URL: {item.url}</p>
               <div className="flex justify-end gap-3">
-              <MdEditDocument
+              <FaEdit
   className="transition-all duration-300 ease-in cursor-pointer text-2xl hover:text-green-600"
   onClick={() => {
     const newName = prompt("Enter new name:", item.name);
