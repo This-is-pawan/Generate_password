@@ -36,7 +36,7 @@ const Register = () => {
 
     try {
       const res = await axios.post<RegisterResponse>(
-        "http://localhost:5000/Auth/register", 
+        "https://generate-password-flame.vercel.app/Auth/register", 
         data,
         { withCredentials: true }
       );
@@ -58,7 +58,7 @@ const Register = () => {
     const data: LoginData = { email, password };
     try {
       
-      const res=await axios.post<RegisterResponse>('http://localhost:5000/Auth/login',data,{withCredentials:true})
+      const res=await axios.post<RegisterResponse>('https://generate-password-flame.vercel.app/Auth/login',data,{withCredentials:true})
       if (res.data.success) {
   toast.success("Login successful!");
     router.push("/Dashboard");
