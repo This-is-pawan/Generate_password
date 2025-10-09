@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import express, { Request, Response, Application } from "express";
 import cors from "cors";
 import connection from "./db/mongodb";
-import authRouter from "./routes/AuthRoute";
+import router from "./routes/AuthRoute";
 
 // ------------------ Load environment variables ------------------
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
@@ -24,7 +24,7 @@ app.use(
 );
 
 // ------------------ Routes ------------------
-app.use("/Auth", authRouter);
+app.use("/Auth", router);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ success: true, message: "Home Route is Working" });
