@@ -31,7 +31,7 @@ const Register = () => {
   const [password, setPassword] = useState("peter123#");
 
   // ✅ BASE URL of your backend
-  const BASE_URL = "https://generate-password-backend.onrender.com";
+  const BASE_URL = "https://generate-password-backend.onrender.com/Auth";
 
   // ---------------- REGISTER ----------------
   const registerHandle = async (e: React.FormEvent) => {
