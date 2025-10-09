@@ -59,9 +59,9 @@ const Dashboard: React.FC = () => {
 
   const fetchUsers = async () => {
   try {
-    const res = await axios.get<SaveResponse>("https://generate-password-flame.vercel.app/Auth/findUser", {
-      withCredentials: true,
-    });
+    const res = await axios.get<SaveResponse>("https://generate-password-flame.vercel.app/Auth/findUser",   { withCredentials: true,headers: {
+    "Content-Type": "application/json",
+  }, });
 
     console.log("Fetched data:", res.data.data); // 👈 check if _id exists
 
@@ -81,9 +81,9 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
     try {
       const payload = { url: web, name };
-      const res = await axios.post<SaveResponse>("https://generate-password-flame.vercel.app/Auth/save", payload, {
-        withCredentials: true,
-      });
+      const res = await axios.post<SaveResponse>("https://generate-password-flame.vercel.app/Auth/save", payload,   { withCredentials: true,headers: {
+    "Content-Type": "application/json",
+  }, });
 
       if (res.data.success) {
         toast.success("Password & user successfully saved");
@@ -100,7 +100,9 @@ const Dashboard: React.FC = () => {
     try {
       const res = await axios.delete<SaveResponse>(
         `https://generate-password-flame.vercel.app/Auth/deleteUser/${id}`,
-        { withCredentials: true }
+         { withCredentials: true,headers: {
+    "Content-Type": "application/json",
+  }, }
       );
 
       if (res.data.success) {
@@ -118,7 +120,9 @@ const updateHandle = async (id: string, name: string, url: string) => {
     const res = await axios.patch<SaveResponse>(
       `https://generate-password-flame.vercel.app/Auth/updateUser/${id}`, 
       { name, url },
-      { withCredentials: true }
+       { withCredentials: true,headers: {
+    "Content-Type": "application/json",
+  }, }
     );
 
     if (res.data.success) {
