@@ -10,7 +10,7 @@ const mongoose_1 = require("mongoose");
 const register = async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
-        res.json(`something is missing from input field`);
+        res.json(`something is missing fromm input field`);
     }
     try {
         const exist = await User_1.UserModel.findOne({ email });

@@ -6,7 +6,7 @@ import { Types } from "mongoose";
 export const register=async(req:Request,res:Response)=>{
 const {name,email,password}=req.body;
 if (!name||!email||!password) {
- res.json(`something is missing from input field`)
+ res.json(`something is missing fromm input field`)
 }
 
 try {
@@ -18,7 +18,7 @@ if (exist) {
  const user=await UserModel.create({name,email,password:hashPasword})
 res.json({success:true,message:'register successfully'})
 
-} catch (error) {
+} catch (error:any) {
  res.json({success:false,message:error})
 }
 

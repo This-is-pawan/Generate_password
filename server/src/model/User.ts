@@ -20,7 +20,7 @@ const UserSchema: Schema<IAuthUser> = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    url: { type: String, required: true },
+    url: { type: String, required: false },
   },
   { timestamps: true }
 );
@@ -29,7 +29,7 @@ const UserSchema: Schema<IAuthUser> = new Schema(
 const UserDataSchema: Schema<IUserData> = new Schema(
   {
     name: { type: String, required: true },
-    url: { type: String, required: true },
+    url: { type: String, required: false },
     
   },
   { timestamps: true }
