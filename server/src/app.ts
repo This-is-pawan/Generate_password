@@ -18,7 +18,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://generate-password-backend.onrender.com", // frontend URL
+    origin: "https://generate-password-flame.vercel.app", // frontend URL
     credentials: true,
   })
 );
