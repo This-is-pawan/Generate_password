@@ -20,7 +20,7 @@ interface LoginData {
   password: string;
  
 }
-
+ const BASE_URL = "https://generate-password-flame.vercel.app/Auth";
 const Register = () => {
   const router = useRouter();
   const [pass, setPass] = useState(true);
@@ -36,11 +36,12 @@ const Register = () => {
 
     try {
       const res = await axios.post<RegisterResponse>(
-        "https://generate-password-flame.vercel.app/Auth/register", 
+        `${BASE_URL}/register`,
         data,
-        { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
      if (res.data.success) {
   toast.success("Registration successful!");
@@ -60,9 +61,12 @@ const Register = () => {
     const data: LoginData = { email, password };
     try {
       
-      const res=await axios.post<RegisterResponse>('https://generate-password-flame.vercel.app/Auth/login',data,  { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, })
+      const res=await axios.post<RegisterResponse>(  `${BASE_URL}/login`,
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
       if (res.data.success) {
   toast.success("Login successful!");
     router.push("/Dashboard");
