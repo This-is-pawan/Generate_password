@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
   const [name, setName] = useState("peter");
   const [printGetUser, setPrintGetUser] = useState<UserItem[]>([]);
 
-  const BASE_URL = "https://generate-password-flame.vercel.app/Auth";
+  const BASE_URL = "https://generate-password-backend.onrender.com/Auth";
 
   // Generate random password
   const randomPassword = (length: number = 30): string => {
