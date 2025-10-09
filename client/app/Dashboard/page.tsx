@@ -1,7 +1,7 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import { FaClipboardCheck } from "react-icons/fa6";
-import { FaTrashCan } from "react-icons/fa6";
+import { FaClipboardCheck, FaTrashCan } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -25,31 +25,26 @@ const Dashboard: React.FC = () => {
   const [name, setName] = useState("peter");
   const [printGetUser, setPrintGetUser] = useState<UserItem[]>([]);
 
+  const BASE_URL = "https://generate-password-flame.vercel.app/Auth";
+
   // Generate random password
   const randomPassword = (length: number = 30): string => {
     const chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]<>?/|";
-    let pass = "";
-    for (let i = 0; i < length; i++) {
-      pass += chars[Math.floor(Math.random() * chars.length)];
-    }
-    return pass;
+    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
   };
 
-  useEffect(() => {
-    setPassword(randomPassword());
-    fetchUsers();
-  }, []);
-
+  // Copy password to clipboard
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(password);
       setClip(true);
     } catch (err) {
-      console.error("Failed to copy:", err);
+      toast.error("Failed to copy password");
     }
   };
 
+  // Hide copy feedback after delay
   useEffect(() => {
     if (clip) {
       const timer = setTimeout(() => setClip(false), 1000);
@@ -57,92 +52,102 @@ const Dashboard: React.FC = () => {
     }
   }, [clip]);
 
+  // Fetch all saved users
   const fetchUsers = async () => {
-  try {
-    const res = await axios.get<SaveResponse>("https://generate-password-flame.vercel.app/Auth/findUser",   { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, });
+    try {
+      const res = await axios.get<SaveResponse>(`${BASE_URL}/findUser`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
 
-    console.log("Fetched data:", res.data.data); // 👈 check if _id exists
-
-    if (res.data.success && res.data.data) {
-      const users = Array.isArray(res.data.data) ? res.data.data : [res.data.data];
-      setPrintGetUser(users);
-    } else {
-      setPrintGetUser([]);
+      if (res.data.success && res.data.data) {
+        const users = Array.isArray(res.data.data) ? res.data.data : [res.data.data];
+        setPrintGetUser(users);
+      } else {
+        setPrintGetUser([]);
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Error fetching users");
     }
-  } catch (error: any) {
-    toast.error(error.message || "Server error while fetching users");
-  }
-};
+  };
 
-
+  // Save new website + name
   const handleWebName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const payload = { url: web, name };
-      const res = await axios.post<SaveResponse>("https://generate-password-flame.vercel.app/Auth/save", payload,   { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, });
+      const res = await axios.post<SaveResponse>(`${BASE_URL}/save`, payload, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
 
       if (res.data.success) {
-        toast.success("Password & user successfully saved");
+        toast.success("Password & user saved successfully!");
         fetchUsers();
       } else {
-        toast.error(res.data.message || "Not saved");
+        toast.error(res.data.message || "Failed to save data");
       }
     } catch (error: any) {
-      toast.error(error.message || "Server error while saving");
+      toast.error(error.response?.data?.message || "Server error while saving");
     }
   };
 
+  // Delete user
   const deleteHandle = async (id: string) => {
     try {
-      const res = await axios.delete<SaveResponse>(
-        `https://generate-password-flame.vercel.app/Auth/deleteUser/${id}`,
-         { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, }
+      const res = await axios.delete<SaveResponse>(`${BASE_URL}/deleteUser/${id}`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        toast.success("User deleted successfully!");
+        fetchUsers();
+      } else {
+        toast.error(res.data.message || "Delete failed");
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Server error while deleting");
+    }
+  };
+
+  // Update user
+  const updateHandle = async (id: string, name: string, url: string) => {
+    try {
+      const res = await axios.patch<SaveResponse>(
+        `${BASE_URL}/updateUser/${id}`,
+        { name, url },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       if (res.data.success) {
-        toast.success("User deleted successfully");
+        toast.success("User updated successfully!");
         fetchUsers();
       } else {
-        toast.error(res.data.message || "Not deleted");
+        toast.error(res.data.message || "Update failed");
       }
     } catch (error: any) {
-      toast.error(error.message || "Server error while deleting");
+      toast.error(error.response?.data?.message || "Server error while updating");
     }
   };
-const updateHandle = async (id: string, name: string, url: string) => {
-  try {
-    const res = await axios.patch<SaveResponse>(
-      `https://generate-password-flame.vercel.app/Auth/updateUser/${id}`, 
-      { name, url },
-       { withCredentials: true,headers: {
-    "Content-Type": "application/json",
-  }, }
-    );
 
-    if (res.data.success) {
-      toast.success("User updated successfully");
-      fetchUsers(); 
-    } else {
-      toast.error(res.data.message || "Not updated");
-    }
-  } catch (error: any) {
-    toast.error(error.message || "Server error while updating");
-  }
-};
+  // On first load
+  useEffect(() => {
+    setPassword(randomPassword());
+    fetchUsers();
+  }, []);
 
   return (
     <div className="w-full p-5">
+      {/* Header */}
       <h1 className="text-center p-5 bg-amber-400 text-white capitalize text-3xl rounded-md shadow-md">
         Dashboard
       </h1>
 
-      {/* Password generator */}
+      {/* Password Generator */}
       <div className="w-full max-w-4xl m-auto mt-10 shadow-lg bg-white flex flex-col md:flex-row items-center gap-4 p-5 rounded-lg">
         <div className="relative w-full md:w-2/3">
           <input
@@ -165,6 +170,7 @@ const updateHandle = async (id: string, name: string, url: string) => {
             </span>
           )}
         </div>
+
         <button
           className="w-full md:w-1/3 p-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors cursor-pointer"
           onClick={() => setPassword(randomPassword())}
@@ -182,6 +188,7 @@ const updateHandle = async (id: string, name: string, url: string) => {
             className="bg-amber-200 pl-4 p-2 rounded-md"
             value={web}
             onChange={(e) => setWeb(e.target.value)}
+            required
           />
           <input
             type="text"
@@ -189,6 +196,7 @@ const updateHandle = async (id: string, name: string, url: string) => {
             className="bg-amber-200 pl-4 p-2 rounded-md"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           <button
             type="submit"
@@ -203,25 +211,24 @@ const updateHandle = async (id: string, name: string, url: string) => {
       <div className="w-full min-h-20 mt-4 shadow bg-white">
         <h1 className="text-center border-b-2 capitalize p-2">Saved Data List</h1>
         {printGetUser.length > 0 ? (
-          printGetUser.map((item, index) => (
-            <div key={item._id || index} className="p-2 border-b">
+          printGetUser.map((item) => (
+            <div key={item._id} className="p-2 border-b">
               <p>Name: {item.name}</p>
               <p>URL: {item.url}</p>
-              <div className="flex justify-end gap-3">
-              <FaEdit
-  className="transition-all duration-300 ease-in cursor-pointer text-2xl hover:text-green-600"
-  onClick={() => {
-    const newName = prompt("Enter new name:", item.name);
-    const newUrl = prompt("Enter new URL:", item.url);
-    if (newName && newUrl) {
-      updateHandle(item._id, newName, newUrl);
-    }
-  }}
-/>
 
-
+              <div className="flex justify-end gap-3 mt-2">
+                <FaEdit
+                  className="cursor-pointer text-2xl hover:text-green-600 transition-all duration-300"
+                  onClick={() => {
+                    const newName = prompt("Enter new name:", item.name);
+                    const newUrl = prompt("Enter new URL:", item.url);
+                    if (newName && newUrl) {
+                      updateHandle(item._id, newName, newUrl);
+                    }
+                  }}
+                />
                 <FaTrashCan
-                  className="transition-all duration-300 ease-in cursor-pointer text-xl hover:text-pink-600"
+                  className="cursor-pointer text-xl hover:text-pink-600 transition-all duration-300"
                   onClick={() => deleteHandle(item._id)}
                 />
               </div>
