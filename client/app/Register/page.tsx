@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
 import { MdWifiPassword } from "react-icons/md";
 import { useRouter } from "next/navigation";
-
 import axios from "axios";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+
 interface RegisterResponse {
   success: boolean;
   message?: string;
@@ -15,23 +16,26 @@ interface RegisterData {
   email: string;
   password: string;
 }
+
 interface LoginData {
   email: string;
   password: string;
- 
 }
- const BASE_URL = "https://generate-password-flame.vercel.app/Auth";
+
 const Register = () => {
   const router = useRouter();
   const [pass, setPass] = useState(true);
-  const [register, setRegister] = useState<"login" | "register">("register");
+  const [formMode, setFormMode] = useState<"login" | "register">("register");
   const [name, setName] = useState("peter");
   const [email, setEmail] = useState("peter@gmail.com");
   const [password, setPassword] = useState("peter123#");
 
+  // ✅ BASE URL of your backend
+  const BASE_URL = "https://generate-password-flame.vercel.app/Auth";
+
+  // ---------------- REGISTER ----------------
   const registerHandle = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const data: RegisterData = { name, email, password };
 
     try {
@@ -43,51 +47,61 @@ const Register = () => {
           withCredentials: true,
         }
       );
-     if (res.data.success) {
-  toast.success("Registration successful!");
-    router.push("/Dashboard");
-    
-} else {
-  toast.error(res.data.message || "Already register ");
-}
+
+      if (res.data.success) {
+        toast.success("Registration successful!");
+        router.push("/Dashboard");
+      } else {
+        toast.error(res.data.message || "User already registered.");
+      }
     } catch (error: any) {
-       toast.error(error)
-      
+      console.error("Register Error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Registration failed. Please check your server."
+      );
     }
   };
 
-  const loginHandle = async(e: React.FormEvent,) => {
+  // ---------------- LOGIN ----------------
+  const loginHandle = async (e: React.FormEvent) => {
     e.preventDefault();
     const data: LoginData = { email, password };
+
     try {
-      
-      const res=await axios.post<RegisterResponse>(  `${BASE_URL}/login`,
+      const res = await axios.post<RegisterResponse>(
+        `${BASE_URL}/login`,
         data,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
-        })
+        }
+      );
+
       if (res.data.success) {
-  toast.success("Login successful!");
-    router.push("/Dashboard");
-} else {
-  toast.error(res.data.message || "Login fail ");
-}
-    } catch (error:any) {
-      toast.error(error);
+        toast.success("Login successful!");
+        router.push("/Dashboard");
+      } else {
+        toast.error(res.data.message || "Login failed. Try again.");
+      }
+    } catch (error: any) {
+      console.error("Login Error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Login failed. Please check your server."
+      );
     }
-    
   };
 
   return (
     <div className="w-full max-w-[400px] m-auto shadow-lg bg-white mt-[4rem] p-5 rounded">
       <form
         className="grid gap-3 relative"
-        onSubmit={register === "register" ? registerHandle : loginHandle}
+        onSubmit={formMode === "register" ? registerHandle : loginHandle}
       >
-        {register === "login" ? (
+        {formMode === "login" ? (
           <>
-            {/* Login Form */}
+            {/* ------------ LOGIN FORM ------------ */}
             <label>Email</label>
             <input
               type="email"
@@ -123,7 +137,7 @@ const Register = () => {
               Don’t have an account?
               <span
                 className="text-blue-900 underline pl-2 cursor-pointer"
-                onClick={() => setRegister("register")}
+                onClick={() => setFormMode("register")}
               >
                 Register
               </span>
@@ -131,7 +145,7 @@ const Register = () => {
           </>
         ) : (
           <>
-            {/* Register Form */}
+            {/* ------------ REGISTER FORM ------------ */}
             <label>Name</label>
             <input
               type="text"
@@ -176,7 +190,7 @@ const Register = () => {
               Already have an account?
               <span
                 className="text-blue-900 underline pl-2 cursor-pointer"
-                onClick={() => setRegister("login")}
+                onClick={() => setFormMode("login")}
               >
                 Login
               </span>
