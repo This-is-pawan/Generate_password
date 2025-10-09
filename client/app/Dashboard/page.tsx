@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
 
   const fetchUsers = async () => {
   try {
-    const res = await axios.get<SaveResponse>("http://localhost:5000/Auth/findUser", {
+    const res = await axios.get<SaveResponse>("https://generate-password-flame.vercel.app/Auth/findUser", {
       withCredentials: true,
     });
 
@@ -81,7 +81,7 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
     try {
       const payload = { url: web, name };
-      const res = await axios.post<SaveResponse>("http://localhost:5000/Auth/save", payload, {
+      const res = await axios.post<SaveResponse>("https://generate-password-flame.vercel.app/Auth/save", payload, {
         withCredentials: true,
       });
 
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
   const deleteHandle = async (id: string) => {
     try {
       const res = await axios.delete<SaveResponse>(
-        `http://localhost:5000/Auth/deleteUser/${id}`,
+        `https://generate-password-flame.vercel.app/Auth/deleteUser/${id}`,
         { withCredentials: true }
       );
 
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
 const updateHandle = async (id: string, name: string, url: string) => {
   try {
     const res = await axios.patch<SaveResponse>(
-      `http://localhost:5000/Auth/updateUser/${id}`, 
+      `https://generate-password-flame.vercel.app/Auth/updateUser/${id}`, 
       { name, url },
       { withCredentials: true }
     );
