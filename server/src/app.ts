@@ -11,7 +11,7 @@ const app: Application = express();
 const port: number = Number(process.env.PORT) || 4000;
 app.use(
   cors({
-    origin: "http://localhost:3000", 
+    origin: "https://generate-password-backend.onrender.com", 
     credentials: true,
   })
 );
@@ -25,5 +25,5 @@ app.get("/", (req: Request, res: Response) => {
 
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on ${port}`);
 });
