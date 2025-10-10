@@ -21,7 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-         <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          toastClassName={() =>
+            "bg-gray-900 text-white rounded-xl shadow-lg p-3 sm:p-4 text-sm sm:text-base w-[90%] sm:w-auto mx-auto sm:mx-0"
+          }
+          bodyClassName={() => "flex items-center justify-between"}
+          className="sm:top-4 sm:right-4 top-2 right-2 w-full sm:w-auto"
+        />
         <Navbar/>
         {children}</body>
     </html>
