@@ -148,7 +148,7 @@ const Dashboard: React.FC = () => {
     <div className="w-full p-5">
       {/* Header */}
       <h1 className="text-center p-5 bg-amber-400 text-white capitalize text-3xl rounded-md shadow-md">
-        Dashboard
+        Dashboard (create strong password )
       </h1>
 
       {/* Password Generator */}
@@ -185,6 +185,9 @@ const Dashboard: React.FC = () => {
 
       {/* Save Website & Name */}
       <div className="w-full flex justify-center mt-4 bg-white gap-3 p-3 shadow rounded-lg">
+        <p className="capitalize">
+  save password after random generate
+</p>
         <form className="flex gap-2 max-sm:grid" onSubmit={handleWebName}>
           <input
             type="text"
