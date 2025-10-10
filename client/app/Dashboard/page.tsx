@@ -5,7 +5,7 @@ import { FaClipboardCheck, FaTrashCan } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { LuLoader } from "react-icons/lu";
 interface UserItem {
   _id: string;
   name: string;
@@ -23,6 +23,7 @@ const Dashboard: React.FC = () => {
   const [password, setPassword] = useState("");
   const [web, setWeb] = useState("website");
   const [name, setName] = useState("peter");
+  const [loading, setLoading] = useState("");
   const [printGetUser, setPrintGetUser] = useState<UserItem[]>([]);
 
   const BASE_URL = "https://generate-password-backend.onrender.com/Auth";
@@ -74,6 +75,7 @@ const Dashboard: React.FC = () => {
   // Save new website + name
   const handleWebName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading('loading')
     try {
       const payload = { url: web, name };
       const res = await axios.post<SaveResponse>(`${BASE_URL}/save`, payload, {
@@ -89,6 +91,8 @@ const Dashboard: React.FC = () => {
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Server error while saving");
+    }finally{
+      setLoading("")
     }
   };
 
@@ -202,7 +206,10 @@ const Dashboard: React.FC = () => {
             type="submit"
             className="bg-black text-white p-2 rounded-md cursor-pointer hover:bg-gray-800"
           >
-            Save
+        {loading==='loading' ?<LuLoader 
+aria-hidden="true"
+className="animate-spin"
+/>:<span>Save</span>}  
           </button>
         </form>
       </div>
