@@ -5,7 +5,7 @@ import { MdWifiPassword } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { LuLoader } from "react-icons/lu";
 interface RegisterResponse {
   success: boolean;
   message?: string;
@@ -29,13 +29,14 @@ const Register = () => {
   const [name, setName] = useState("peter");
   const [email, setEmail] = useState("peter@gmail.com");
   const [password, setPassword] = useState("peter123#");
-
+  const [loading,setLoading]=useState('')
   // ✅ BASE URL of your backend
   const BASE_URL = "https://generate-password-backend.onrender.com/Auth";
 
   // ---------------- REGISTER ----------------
   const registerHandle = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading('loading')
     const data: RegisterData = { name, email, password };
 
     try {
@@ -59,13 +60,16 @@ const Register = () => {
       toast.error(
         error.response?.data?.message ||
           "Registration failed. Please check your server."
-      );
+      )finally{
+      setLoading('')
+      }
     }
   };
 
   // ---------------- LOGIN ----------------
   const loginHandle = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading('loading')
     const data: LoginData = { email, password };
 
     try {
@@ -89,7 +93,9 @@ const Register = () => {
       toast.error(
         error.response?.data?.message ||
           "Login failed. Please check your server."
-      );
+      ) finally{
+      setLoading('')
+      }
     }
   };
 
@@ -130,7 +136,10 @@ const Register = () => {
               type="submit"
               className="p-3 bg-gray-950 text-white rounded-full mt-5 hover:bg-gray-700 cursor-pointer border-2"
             >
-              Login
+            {loading==='loading' ?<LuLoader 
+aria-hidden="true"
+className="animate-spin"
+/>:<span>Login</span>} 
             </button>
 
             <p className="text-center m-3">
@@ -183,7 +192,10 @@ const Register = () => {
               type="submit"
               className="p-3 bg-gray-950 text-white rounded-full mt-5 hover:bg-gray-700 cursor-pointer border-2"
             >
-              Register
+        {loading==='loading' ?<LuLoader 
+aria-hidden="true"
+className="animate-spin"
+/>:<span>Register</span>} 
             </button>
 
             <p className="text-center m-3">
