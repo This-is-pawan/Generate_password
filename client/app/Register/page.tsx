@@ -100,7 +100,8 @@ const Register = () => {
   };
 
   return (
-    <div className="w-full max-w-[400px] m-auto shadow-lg bg-white mt-[4rem] p-5 rounded">
+    <div className="w-[90%] sm:w-[80%] md:w-[400px] mx-auto shadow-lg bg-white mt-16 p-5 rounded-lg">
+
       <form
         className="grid gap-3 relative"
         onSubmit={formMode === "register" ? registerHandle : loginHandle}
