@@ -185,10 +185,10 @@ const Dashboard: React.FC = () => {
 
       {/* Save Website & Name */}
       <div className="w-full flex justify-center mt-4 bg-white gap-3 p-3 shadow rounded-lg">
-        <p className="capitalize">
-  save password after random generate
-</p>
         <form className="flex gap-2 max-sm:grid" onSubmit={handleWebName}>
+        <p className="capitalize">
+generate first then save 
+</p>
           <input
             type="text"
             placeholder="Website/App/URL"
