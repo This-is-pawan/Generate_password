@@ -184,8 +184,8 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Save Website & Name */}
-      <div className="w-full flex justify-center mt-4 bg-white gap-3 p-3 shadow">
-        <form className="flex gap-2" onSubmit={handleWebName}>
+      <div className="w-full flex justify-center mt-4 bg-white gap-3 p-3 shadow rounded-lg">
+        <form className="flex gap-2 max-sm:grid" onSubmit={handleWebName}>
           <input
             type="text"
             placeholder="Website/App/URL"
@@ -215,13 +215,15 @@ className="animate-spin"
       </div>
 
       {/* Saved Data List */}
-      <div className="w-full min-h-20 mt-4 shadow bg-white">
+      <div className="w-full min-h-20 mt-4 shadow bg-white rounded-lg">
         <h1 className="text-center border-b-2 capitalize p-2">Saved Data List</h1>
         {printGetUser.length > 0 ? (
           printGetUser.map((item) => (
             <div key={item._id} className="p-2 border-b">
               <p>Name: {item.name}</p>
-              <p>URL: {item.url}</p>
+             <p className="break-words text-sm sm:text-base">
+  pass: {item.url}
+</p>
 
               <div className="flex justify-end gap-3 mt-2">
                 <FaEdit
