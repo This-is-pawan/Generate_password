@@ -23,10 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <ToastContainer
           position="top-right"
-          autoClose={3000}
-      className={
-            "bg-gray-900 text-white rounded-xl shadow-lg p-3 sm:p-4 text-sm sm:text-base w-[90%] sm:w-auto mx-auto sm:mx-0"
-          }
+          autoClose={2000}
+      
          
         />
         <Navbar/>
