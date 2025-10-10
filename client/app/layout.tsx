@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ToastContainer
           position="top-right"
-          autoClose={2000}
+          autoClose={3000}
       className="!w-full sm:!w-auto !max-w-full sm:!max-w-sm px-2"
           toastClassName="!rounded-xl !shadow-lg !text-sm sm:!text-base !w-[95%] sm:!w-auto !mx-auto sm:!mx-0"
         
