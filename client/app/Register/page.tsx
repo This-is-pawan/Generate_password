@@ -60,9 +60,9 @@ const Register = () => {
       toast.error(
         error.response?.data?.message ||
           "Registration failed. Please check your server."
-      )finally{
+      )
+    }finally{
       setLoading('')
-      }
     }
   };
 
@@ -93,9 +93,9 @@ const Register = () => {
       toast.error(
         error.response?.data?.message ||
           "Login failed. Please check your server."
-      ) finally{
+      ) 
+    }finally{
       setLoading('')
-      }
     }
   };
 
