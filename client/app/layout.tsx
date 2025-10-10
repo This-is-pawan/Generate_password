@@ -24,7 +24,9 @@ export default function RootLayout({
         <ToastContainer
           position="top-right"
           autoClose={2000}
-      
+      className="!w-full sm:!w-auto !max-w-full sm:!max-w-sm px-2"
+          toastClassName="!rounded-xl !shadow-lg !text-sm sm:!text-base !w-[95%] sm:!w-auto !mx-auto sm:!mx-0"
+        
          
         />
         <Navbar/>
