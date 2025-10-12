@@ -41,7 +41,7 @@ const Navbar = () => {
         <Link
           href="/"
           onClick={handleLogoutToast} // ✅ show toast on Home click
-          className="text-blue-900 border-2 p-2 pl-4 pr-4 rounded-2xl border-green-500"
+          className="text-blue-900 border-2 p-2 pl-4 pr-4 rounded-2xl border-blue-950"
         >
           Home
         </Link>
