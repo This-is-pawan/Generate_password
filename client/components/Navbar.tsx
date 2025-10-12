@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-blue-950 p-4">
+    <div className="bg-blue-800 p-4">
       <div className="flex justify-around items-center ">
         <Link
           href="/"
