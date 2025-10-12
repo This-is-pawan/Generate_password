@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-amber-200 p-4">
+    <div className="bg-pink-200 p-4">
       <div className="flex justify-around items-center ">
         <Link
           href="/"
@@ -55,7 +55,7 @@ const Navbar = () => {
 
         <Link
           href="/Register"
-          className="text-blue-900 border-2 p-2 rounded-2xl border-green-500"
+          className="text-blue-900 border-2 p-2 rounded-2xl border-blue-950"
         >
           Sign Up / Login
         </Link>
