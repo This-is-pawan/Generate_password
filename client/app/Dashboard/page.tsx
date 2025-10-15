@@ -223,9 +223,9 @@ className="animate-spin"
         {printGetUser.length > 0 ? (
           printGetUser.map((item) => (
             <div key={item._id} className="p-2 border-b">
-              <p>Name: {item.name}</p>
+              <p>Name: {item.name.toUpperCase()}</p>
              <p className="break-words text-sm sm:text-base">
-  pass: {item.url.toUpperCase()}
+  pass: {item.url}
 </p>
 
               <div className="flex justify-end gap-3 mt-2">
