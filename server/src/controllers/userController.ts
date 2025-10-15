@@ -78,7 +78,7 @@ export const DataSave = async (req: Request, res: Response) => {
       .json({ success: false, message: "URL or Name missing" });
   }
 
-  try {
+  try { 
   
     const existing = await UserSave.findOne({ name });
 
