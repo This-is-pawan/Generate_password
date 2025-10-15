@@ -1,1 +1,1 @@
-full stack  application genrate 
+full stack  application generate secure password
