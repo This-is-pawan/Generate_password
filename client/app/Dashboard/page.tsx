@@ -225,7 +225,7 @@ className="animate-spin"
             <div key={item._id} className="p-2 border-b">
               <p>Name: {item.name.toUpperCase()}</p>
              <p className="break-words text-sm sm:text-base">
-  pass: {item.url}
+  pass: {item.url.chartAt(30)}
 </p>
 
               <div className="flex justify-end gap-3 mt-2">
