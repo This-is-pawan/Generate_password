@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { MdWifiPassword } from "react-icons/md";
 import { useRouter } from "next/navigation";
